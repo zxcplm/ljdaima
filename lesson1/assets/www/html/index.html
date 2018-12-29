@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style type="text/css">
+			* {
+				margin: 0px;				
+			}
+			
+			body {
+				width: 100%;
+				height: 100vh;
+				display: flex;
+				flex-direction: column;
+				justify-content: center;
+				align-items: center;
+				
+			}
+			
+			.topone{
+				width: 100%;
+				height: 25%;
+				display: flex;
+				justify-content: center;
+				align-items: center;
+			}
+			
+			.base {
+				width: 100%;
+				height: 75%;	
+				background: url(../img/a12.png) no-repeat center center fixed;
+				background-size:cover;
+			}
+			
+			.cell{
+				width: 100%;
+				height: 50px;
+				border-bottom: 2px  solid  #4E89C5;
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				font-family: 楷体;
+				font-size: 1.3rem;
+				color: #00FFFF;
+			}
+		</style>
+		</style>
+	</head>
+
+	<body>
+		<div class="topone">
+			<img  src="../img/a14.png"  width="100%"  height="100%"/>
+		</div>
+		<div class="base">
+			
+		</div>
+	</body>
+<script type="text/javascript">
+  var  baseObj= document.getElementsByClassName("base")[0];
+  function UrlSearch()
+  {	
+	//decodeURI location.search
+	var url =decodeURI(location.search);
+	alert(url);
+	
+	var  str=url.substr(url.indexOf("=")+1);
+    alert(str);
+    
+    //字符串转换成json
+    var datas=JSON.parse(str);
+    
+    alert(datas.length);
+    
+    datas.forEach(function(value,index){
+	
+	   //alert(value["tname"]);
+	   var  divObj= document.createElement("div");
+	   divObj.className="cell";	  	   
+	   divObj.setAttribute("onclick","forward('"+value["turl"]+"')");	   	   
+	   divObj.innerText=value["tname"];
+	   baseObj.appendChild(divObj);
+	   alert(value["imgpath"]);
+	   var imgObj=document.createElement("img");
+	   imgObj.setAttribute("src",value["imgpath"]);
+	   divObj.appendChild(imgObj);
+
+	   
+    });
+    
+	
+  }
+UrlSearch();
+
+function forward(id)
+{
+	
+    window.location.href=id;
+	
+}
+</script>
+</html>

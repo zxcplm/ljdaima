@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+			<style type="text/css">
+			* {
+				margin: 0px;
+			}
+			
+			body {
+				width: 100%;
+				height: 100vh;
+				background-color: #7FFFD4;
+			}
+			
+			.base {
+				width: 100%;
+				height: 80%;
+				display: flex;
+				flex-wrap: wrap;
+				justify-content: center;
+				align-items: center;
+				font-family: 楷体;
+				font-size: 1.2rem;
+			}
+			
+			.topview{
+				width: 80%;
+			    height: 15%;
+			}
+		
+		    .loginview{			
+			    width: 50%;
+			    height: 40%;
+			    display: flex;
+			    flex-direction: column;
+			    justify-content: center;
+			    align-items: center;						
+		    }
+		    
+		    .cell{
+		 	    width: 80%;
+			    height: 30%;
+			    border: 1px  solid  #00FFFF;
+			    margin: 5px;			
+			    display: flex;
+				justify-content: center;
+			    align-items: center;
+		    }
+		    
+		    input{
+			    text-align: center;
+			    width:100%;
+			    height:100%;
+		    }
+		
+		</style>
+	</head>
+	<body>
+		<div class="base">
+		    Java语言
+		<hr>
+		 <canvas id="mountNode"></canvas>
+
+		</div>
+	</body>
+	
+	<script src="https://gw.alipayobjects.com/os/antv/assets/f2/3.3.0/f2.min.js"></script>
+    <script type="text/javascript">
+
+      alert("请求业务报表");
+
+      var  formData=new FormData();
+      formData.append("datas","classestostucount");
+
+      var options={method:'post',body:formData};
+  
+      fetch("http://iqzaxn.natappfree.cc/antv",options).then(function(response){
+	  
+	    if(response.status==200)
+	    {	  
+		    response.json().then(function(datas){
+			  
+			    alert(datas.jsonDatas);
+			  
+			    createView(datas.jsonDatas);
+			  
+		    });
+	    }
+	  
+     }).catch(function(error){
+	    
+     });
+     
+     function   createView(data)
+     {
+	     var chart = new F2.Chart({
+		     id: 'mountNode',
+		     pixelRatio: window.devicePixelRatio
+		   });
+	   
+	     chart.source(data, {
+		     sales: {
+		  	   tickCount: 2
+		     }
+	      });
+	   
+		  chart.interval().position('name*count');
+		  chart.render();
+     }
+
+</script>
+
+</html>

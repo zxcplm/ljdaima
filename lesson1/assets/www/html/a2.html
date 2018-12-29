@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+			<link rel="stylesheet" href="https://gw.alipayobjects.com/os/rmsportal/YmDAMEQVbLJpVbKiRQVX.css" />
+			<style type="text/css">
+			* {
+				margin: 0px;
+				
+			}
+			
+			body {
+				width: 100%;
+				height: 100vh;
+				background-color: #7FFFD4;
+			}
+			
+			.base {
+				width: 100%;
+				height: 80%;
+				display: flex;
+				flex-wrap: wrap;
+				justify-content: center;
+				align-items: center;
+				font-family: 楷体;
+				font-size: 1.2rem;
+			}
+			
+			.topview{
+				width: 80%;
+			    height: 15%;	
+			}
+		
+		    .loginview{			
+			    width: 50%;
+			    height: 40%;
+			    display: flex;
+			    flex-direction: column;
+			    justify-content: center;
+			    align-items: center;						
+		    }
+		    
+		    .cell{
+		        width: 80%;
+			    height: 30%;
+			    border: 1px  solid  #00FFFF;
+			    margin: 5px;			
+			    display: flex;
+				justify-content: center;
+				align-items: center;
+		    }
+		    
+		    input{
+			    text-align: center;
+			    width:100%;
+			    height:100%;
+		    }
+		
+		</style>
+	</head>
+	<body>
+		<div class="base">
+		    Python语言
+		    <hr>
+		    <div class="chart-wrapper">
+              <canvas id="mountNode"></canvas>
+           </div>
+		</div>
+	</body>
+	
+	<script src="https://gw.alipayobjects.com/os/antv/assets/f2/3.3.0/f2.min.js"></script>
+    <script  type="text/javascript">
+    alert("请求饼图业务报表");
+
+    var  formData=new FormData();
+    formData.append("datas","querynamecount");
+
+    var options={method:'post',body:formData};
+ 
+    fetch("http://iqzaxn.natappfree.cc/antv",options).then(function(response){
+	  
+	    if(response.status==200)
+	    {	  
+		    response.json().then(function(datas){
+			  
+			    alert(datas.namecountDatas);
+			  
+			    createView(datas.namecountDatas);	
+			  
+		    });
+	    }
+	  
+   }).catch(function(error){
+	  	  
+   });
+  
+    function createView(datas)
+    {
+	    var  a="1";
+	  
+	    var chart = new F2.Chart({
+		    id: 'mountNode',
+		    pixelRatio: window.devicePixelRatio
+	  	  });
+	    
+		  chart.source(datas, {
+		    percent: {
+		      formatter: function formatter(val) {
+		        return val * 100 + '%';
+		      }
+		    }
+		  });	
+		
+		  /**chart.legend({
+			    position: 'right',
+			    itemFormatter: function itemFormatter(val) {
+			      return val + '  ' + map[val];
+			    }
+			  });**/	
+		
+		  chart.tooltip(false);
+			
+		  chart.coord('polar', {
+		    transposed: true,
+		    radius: 0.85
+		  });
+		
+		  chart.axis(false);
+		
+	  	  chart.interval().position('a*count').color('name', ['#1890FF', '#13C2C2', '#2FC25B', '#FACC14', '#F04864', '#8543E0']).adjust('stack').style({
+		    lineWidth: 1,
+		    stroke: '#fff',
+		    lineJoin: 'round',
+		    lineCap: 'round'
+		  }).animate({
+		    appear: {
+		      duration: 1200,
+		      easing: 'bounceOut'
+		    }
+		  });
+
+		  chart.render();
+	  
+    }
+  
+</script>
+
+</html>
