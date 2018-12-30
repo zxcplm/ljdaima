@@ -90,7 +90,7 @@
 		   var  nameObj= document.getElementById("username");
 		   var  pwdObj= document.getElementById("userpwd");
 		   
-		   alert(nameObj.value+","+pwdObj.value);
+		   //alert(nameObj.value+","+pwdObj.value);
 		   
 		   //带有请求的参数  FormData
 		   var formdatas=new FormData();
@@ -100,9 +100,9 @@
 		   
 		   var  options={method:"post",body:formdatas};
 		   
-		   alert(fetch);//检查手机是否支持fetch
+		   //alert(fetch);//检查手机是否支持fetch
 		   
-		   fetch("http://iqzaxn.natappfree.cc/user",options).then(function(response){
+		   fetch("http://qhbcra.natappfree.cc/user",options).then(function(response){
 			   
 			
 			   if(response.status==200)
@@ -111,9 +111,9 @@
 				      
 				      //接受参数
 				      response.json().then(function(data){
-					       alert(data.msg);
-					       alert(data.contentdata);
-						   alert(typeof data.contentdata);
+					       //alert(data.msg);
+					       //alert(data.contentdata);
+						   //alert(typeof data.contentdata);
 						   
 						   var jsondata=data.contentdata;
 						   /**jsondata.forEach(function(val,index){
@@ -140,7 +140,7 @@
 			   alert("连接异常"+error);
 		   });
 		   
-		   alert("end");
+		   //alert("end");
 		   
 	   }
 		

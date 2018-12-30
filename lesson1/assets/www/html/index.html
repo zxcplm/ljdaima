@@ -63,15 +63,15 @@
   {	
 	//decodeURI location.search
 	var url =decodeURI(location.search);
-	alert(url);
+	//alert(url);
 	
 	var  str=url.substr(url.indexOf("=")+1);
-    alert(str);
+    //alert(str);
     
     //字符串转换成json
     var datas=JSON.parse(str);
     
-    alert(datas.length);
+    //alert(datas.length);
     
     datas.forEach(function(value,index){
 	
@@ -81,7 +81,7 @@
 	   divObj.setAttribute("onclick","forward('"+value["turl"]+"')");	   	   
 	   divObj.innerText=value["tname"];
 	   baseObj.appendChild(divObj);
-	   alert(value["imgpath"]);
+	   //alert(value["imgpath"]);
 	   var imgObj=document.createElement("img");
 	   imgObj.setAttribute("src",value["imgpath"]);
 	   divObj.appendChild(imgObj);

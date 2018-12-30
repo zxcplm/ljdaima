@@ -45,16 +45,16 @@
 			    width: 80%;
 				height: 80%;
 			}
-		
+			
 		</style>
 	</head>
 	<body>
 		<div class="base">
 		   <div class="wenzi">
-			     各班人数
+				  各班人数
 		   </div>
 		   <div class="chart-wrapper">
-              <canvas id="mountNode"></canvas>
+             <canvas id="mountNode"></canvas>
            </div>
 		</div>
 	</body>
@@ -62,7 +62,7 @@
 	<script src="https://gw.alipayobjects.com/os/antv/assets/f2/3.3.0/f2.min.js"></script>
     <script type="text/javascript">
 
-      alert("柱状图业务报表");
+      alert("折线图业务报表");
 
       var  formData=new FormData();
       formData.append("datas","classestostucount");
@@ -88,19 +88,47 @@
      
      function   createView(data)
      {
-	     var chart = new F2.Chart({
-		     id: 'mountNode',
-		     pixelRatio: window.devicePixelRatio
-		   });
-	   
-	     chart.source(data, {
-		     sales: {
-		  	   tickCount: 2
-		     }
-	      });
-	   
-		  chart.interval().position('name*count');
-		  chart.render();
+    	 var chart = new F2.Chart({
+    		  id: 'mountNode',
+    		  pixelRatio: window.devicePixelRatio
+    		});
+
+    		chart.source(data, {
+    		  count: {
+    		    tickCount: 5,
+    		    min: 0
+    		  },
+    		  name: {
+    		    range: [0, 1]
+    		  }
+    		});
+    		chart.tooltip({
+    		  showCrosshairs: true,
+    		  showItemMarker: false,
+    		  onShow: function onShow(ev) {
+    		    var items = ev.items;
+    		    items[0].name = null;
+    		    items[0].value = '人数:' + items[0].value;
+    		  }
+    		});
+    		chart.axis('name', {
+    		  label: function label(text, index, total) {
+    		    var textCfg = {};
+    		    if (index === 0) {
+    		      textCfg.textAlign = 'left';
+    		    } else if (index === total - 1) {
+    		      textCfg.textAlign = 'right';
+    		    }
+    		    return textCfg;
+    		  }
+    		});
+    		chart.line().position('name*count');
+    		chart.point().position('name*count').style({
+    		  stroke: '#fff',
+    		  lineWidth: 1
+    		});
+    		chart.render();
+    		
      }
 
 </script>

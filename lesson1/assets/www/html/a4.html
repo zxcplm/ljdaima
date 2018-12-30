@@ -3,9 +3,10 @@
 	<head>
 		<meta charset="UTF-8">
 		<title></title>
+			<link rel="stylesheet" href="https://gw.alipayobjects.com/os/rmsportal/YmDAMEQVbLJpVbKiRQVX.css" />
 			<style type="text/css">
 			* {
-				margin: 0px;
+				margin: 0px;				
 			}
 			
 			body {
@@ -50,26 +51,25 @@
 	</head>
 	<body>
 		<div class="base">
-		   <div class="wenzi">
-			     各班人数
-		   </div>
-		   <div class="chart-wrapper">
+		    <div class="wenzi">
+				   各班人数
+		    </div>
+		    <div class="chart-wrapper">
               <canvas id="mountNode"></canvas>
-           </div>
+            </div>
 		</div>
 	</body>
 	
 	<script src="https://gw.alipayobjects.com/os/antv/assets/f2/3.3.0/f2.min.js"></script>
-    <script type="text/javascript">
+    <script  type="text/javascript">
+    alert("玫瑰图业务报表");
+    
+    var  formData=new FormData();
+    formData.append("datas","classestostucount");
 
-      alert("柱状图业务报表");
+    var options={method:'post',body:formData};
 
-      var  formData=new FormData();
-      formData.append("datas","classestostucount");
-
-      var options={method:'post',body:formData};
-  
-      fetch("http://qhbcra.natappfree.cc/antv",options).then(function(response){
+    fetch("http://qhbcra.natappfree.cc/antv",options).then(function(response){
 	  
 	    if(response.status==200)
 	    {	  
@@ -82,26 +82,30 @@
 		    });
 	    }
 	  
-     }).catch(function(error){
+   }).catch(function(error){
 	    
-     });
-     
-     function   createView(data)
-     {
-	     var chart = new F2.Chart({
-		     id: 'mountNode',
-		     pixelRatio: window.devicePixelRatio
-		   });
-	   
-	     chart.source(data, {
-		     sales: {
-		  	   tickCount: 2
-		     }
-	      });
-	   
-		  chart.interval().position('name*count');
-		  chart.render();
-     }
+   });
+   
+   function   createView(data)
+   {
+	   var chart = new F2.Chart({
+ 		  id: 'mountNode',
+ 		  pixelRatio: window.devicePixelRatio
+ 		});
+ 		chart.source(data);
+ 		chart.coord('polar');
+ 		
+ 		chart.legend({
+ 		  position: 'right'
+ 		});
+ 		
+ 		chart.axis(false);
+ 		chart.interval().position('name*count').color('name').style({
+ 		  lineWidth: 1,
+ 		  stroke: '#fff'
+ 		});
+ 		chart.render();
+   }
 
 </script>
 
