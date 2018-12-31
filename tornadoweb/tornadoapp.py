@@ -96,6 +96,34 @@ class  AntvHandler(tornado.web.RequestHandler):
             jsonDatas = json.loads(data)
             print("namecountDatas-->", jsonDatas)
             self.finish({"namecountDatas": jsonDatas})
+        elif method == "querysexcount":
+            url = "http://127.0.0.1:8060/userdataservice/user?wsdl"
+            service = suds.client.Client(url)
+            data = service.service.querySexCount()
+            print("data-->", data)
+            print(type(data))
+            jsonDatas = json.loads(data)
+            print("sexcountDatas-->", jsonDatas)
+            self.finish({"sexcountDatas": jsonDatas})
+        elif method == "queryaddressCount":
+            url = "http://127.0.0.1:8060/userdataservice/user?wsdl"
+            service = suds.client.Client(url)
+            data = service.service.queryAddressCount()
+            print("data-->", data)
+            print(type(data))
+            jsonDatas = json.loads(data)
+            print("addresscountDatas-->", jsonDatas)
+            self.finish({"addresscountDatas": jsonDatas})
+        elif method == "queryageCount":
+            url = "http://127.0.0.1:8060/userdataservice/user?wsdl"
+            service = suds.client.Client(url)
+            data = service.service.queryAgeCount()
+            print("data-->", data)
+            print(type(data))
+            jsonDatas = json.loads(data)
+            print("agecountDatas-->", jsonDatas)
+            self.finish({"agecountDatas": jsonDatas})
+
 
 #设置配置顶
 settings={
