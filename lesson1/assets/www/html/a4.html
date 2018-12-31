@@ -26,7 +26,7 @@
 			
 			.wenzi{
 				width: 100%;
-				height: 40%;
+				height: 10%;
 				display: flex;
 				justify-content: center;
 				align-items: center;
@@ -36,7 +36,15 @@
 			
 			.chart-wrapper{
 				width: 100%;
-				height: 60%;
+				height: 45%;
+				display: flex;
+				justify-content: center;
+				align-items: center;
+			}
+			
+			.chart-wrappers{
+				width: 100%;
+				height: 45%;
 				display: flex;
 				justify-content: center;
 				align-items: center;
@@ -52,60 +60,106 @@
 	<body>
 		<div class="base">
 		    <div class="wenzi">
-				   各班人数
+				    每个姓所占比例
 		    </div>
 		    <div class="chart-wrapper">
               <canvas id="mountNode"></canvas>
             </div>
+            <div class="chart-wrappers">
+              <canvas id="mountNodes"></canvas>
+           </div>
 		</div>
 	</body>
 	
 	<script src="https://gw.alipayobjects.com/os/antv/assets/f2/3.3.0/f2.min.js"></script>
     <script  type="text/javascript">
-    alert("玫瑰图业务报表");
+    alert("饼图和Election Donut业务报表");
     
     var  formData=new FormData();
-    formData.append("datas","classestostucount");
+    formData.append("datas","querynamecount");
 
     var options={method:'post',body:formData};
-
-    fetch("http://qhbcra.natappfree.cc/antv",options).then(function(response){
+ 
+    fetch("http://8xb9bm.natappfree.cc/antv",options).then(function(response){
 	  
 	    if(response.status==200)
 	    {	  
 		    response.json().then(function(datas){
 			  
-			    //alert(datas.jsonDatas);
+			    //alert(datas.namecountDatas);
 			  
-			    createView(datas.jsonDatas);
+			    //接收python数据
+			    createView(datas.namecountDatas);	
 			  
 		    });
 	    }
 	  
    }).catch(function(error){
-	    
+	  	  
    });
-   
-   function   createView(data)
-   {
-	   var chart = new F2.Chart({
- 		  id: 'mountNode',
- 		  pixelRatio: window.devicePixelRatio
- 		});
- 		chart.source(data);
- 		chart.coord('polar');
- 		
- 		chart.legend({
- 		  position: 'right'
- 		});
- 		
- 		chart.axis(false);
- 		chart.interval().position('name*count').color('name').style({
- 		  lineWidth: 1,
- 		  stroke: '#fff'
- 		});
- 		chart.render();
-   }
+  
+    function createView(datas)
+    {
+    	var a="1";
+    	
+    	var chart = new F2.Chart({
+    		  id: 'mountNode',
+    		  pixelRatio: window.devicePixelRatio
+    		});
+    		chart.source(datas, {
+    		  count: {
+    		    formatter: function formatter(val) {
+    		      return val + '%';
+    		    }
+    		  }
+    		});
+    		chart.tooltip(false);
+    		
+    		chart.coord('polar', {
+    		  transposed: true,
+    		  innerRadius: 0.4,
+    		  radius: 0.85
+    		});
+    		chart.axis(false);
+    		chart.interval().position('a*count').color('name', ['#1890FF', '#13C2C2', '#2FC25B', '#FACC14', '#F04864', '#8543E0', '#3436C7', '#223273']).adjust('stack').shape('pie-with-icon');
+    		chart.render();
+    		
+    		
+    		
+    		var chart = new F2.Chart({
+    			  id: 'mountNodes',
+    			  pixelRatio: window.devicePixelRatio
+    			});
+    			chart.source(datas);
+    			chart.legend(false);
+    			chart.axis(false);
+
+    			chart.coord('polar', {
+    			  transposed: true,
+    			  radiug: 0.9,
+    			  innerRadius: 0.5,
+    			  startAngle: 5 * Math.PI / 6,
+    			  endAngle: 13 * Math.PI / 6
+    			});
+
+    			chart.guide().text({
+    			  position: ['50%', '50%'],
+    			  content: '总人数12人',
+    			  style: {
+    			    fontSize: 16,
+    			    textAlign: 'center',
+    			    textBaseLine: 'middle'
+    			  }
+    			});
+
+    			chart.interval().position('a*count').color('name').adjust('stack').style({
+    			  lineWidth: 1,
+    			  stroke: '#fff'
+    			});
+
+    			chart.render();
+    		
+    }
 
 </script>
 

@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+			<style type="text/css">
+			* {
+				margin: 0px;
+			}
+			
+			body {
+				width: 100%;
+				height: 100vh;
+				background-color: #7FFFD4;
+			}
+			
+			.base {
+				width: 100%;
+				height: 100%;
+				display: flex;
+				flex-wrap: wrap;
+				justify-content: center;
+				align-items: center;
+			}
+			
+			.wenzi{
+				width: 100%;
+				height: 10%;
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				font-family: 楷体;
+				font-size: 2rem;
+			}
+			
+			.chart-wrapper{
+				width: 100%;
+				height: 45%;
+				display: flex;
+				justify-content: center;
+				align-items: center;
+			}
+			
+			.chart-wrappers{
+				width: 100%;
+				height: 45%;
+				display: flex;
+				justify-content: center;
+				align-items: center;
+			}
+			
+			canvas{
+			    width: 80%;
+				height: 80%;
+			}
+		
+		</style>
+	</head>
+	<body>
+		<div class="base">
+		   <div class="wenzi">
+			    男女数量
+		   </div>
+		   <div class="chart-wrapper">
+              <canvas id="mountNode"></canvas>
+           </div>
+           <div class="chart-wrappers">
+              <canvas id="mountNodes"></canvas>
+           </div>
+		</div>
+	</body>
+	
+	<script src="https://gw.alipayobjects.com/os/antv/assets/f2/3.3.0/f2.min.js"></script>
+    <script type="text/javascript">
+
+      alert("柱状图和环图业务报表");
+
+      var  formData=new FormData();
+      formData.append("datas","querysexcount");
+
+      var options={method:'post',body:formData};
+  
+      fetch("http://8xb9bm.natappfree.cc/antv",options).then(function(response){
+	  
+	    if(response.status==200)
+	    {	  
+		    response.json().then(function(datas){
+			  
+			    //alert(datas.sexcountDatas);
+			  
+			    //接收python数据
+			    createView(datas.sexcountDatas);
+			  
+		    });
+	    }
+	  
+     }).catch(function(error){
+	    
+     });
+     
+     function   createView(data)
+     {
+    	 var chart = new F2.Chart({
+		     id: 'mountNode',
+		     pixelRatio: window.devicePixelRatio
+		   });
+	   
+	     chart.source(data, {
+		     sales: {
+		  	   tickCount: 2
+		     }
+	      });
+	   
+		  chart.interval().position('name*count');
+		  chart.render();
+		  
+		  
+		  
+		  
+		  var a="1";
+		  var chart = new F2.Chart({
+    		  id: 'mountNodes',
+    		  pixelRatio: window.devicePixelRatio
+    		});
+    		chart.source(data, {
+    		  percent: {
+    		    formatter: function formatter(val) {
+    		      return val + '%';
+    		    }
+    		  }
+    		});
+    		chart.tooltip(false);
+    		
+    		chart.coord('polar', {
+    		  transposed: true,
+    		  innerRadius: 0.7,
+    		  radius: 0.85
+    		});
+    		chart.axis(false);
+    		chart.interval().position('a*count').color('name', ['#FE5D4D', '#3BA4FF', '#737DDE']).adjust('stack');
+
+    		chart.guide().html({
+    		  position: ['50%', '45%'],
+    		  html: '<div style="width: 150px;height: 30px;text-align: center;">' + '<div style="font-size: 12px">总人数</div>' + '<div style="font-size: 15px">12人</div>' + '</div>'
+    		});
+    		chart.render();
+		  
+     }
+
+</script>
+
+</html>

@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+			<style type="text/css">
+			* {
+				margin: 0px;
+			}
+			
+			body {
+				width: 100%;
+				height: 100vh;
+				background-color: #7FFFD4;
+			}
+			
+			.base {
+				width: 100%;
+				height: 100%;
+				display: flex;
+				flex-wrap: wrap;
+				justify-content: center;
+				align-items: center;
+			}
+			
+			.wenzi{
+				width: 100%;
+				height: 10%;
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				font-family: 楷体;
+				font-size: 2rem;
+			}
+			
+			.chart-wrapper{
+				width: 100%;
+				height: 45%;
+				display: flex;
+				justify-content: center;
+				align-items: center;
+			}
+			
+			.chart-wrappers{
+				width: 100%;
+				height: 45%;
+				display: flex;
+				justify-content: center;
+				align-items: center;
+			}
+			
+			canvas{
+			    width: 80%;
+				height: 80%;
+			}
+		
+		</style>
+	</head>
+	<body>
+		<div class="base">
+		   <div class="wenzi">
+			     学生地址相同人数
+		   </div>
+		   <div class="chart-wrapper">
+              <canvas id="mountNode"></canvas>
+           </div>
+           <div class="chart-wrappers">
+              <canvas id="mountNodes"></canvas>
+           </div>
+		</div>
+	</body>
+	
+	<script src="https://gw.alipayobjects.com/os/antv/assets/f2/3.3.0/f2.min.js"></script>
+    <script type="text/javascript">
+
+      alert("折线图和Election Donut业务报表");
+
+      var  formData=new FormData();
+      formData.append("datas","queryaddressCount");
+
+      var options={method:'post',body:formData};
+  
+      fetch("http://8xb9bm.natappfree.cc/antv",options).then(function(response){
+	  
+	    if(response.status==200)
+	    {	  
+		    response.json().then(function(datas){
+			  
+			    //alert(datas.addresscountDatas);
+			    
+			    //接收python数据
+			    createView(datas.addresscountDatas);
+			  
+		    });
+	    }
+	  
+     }).catch(function(error){
+	    
+     });
+     
+     function   createView(data)
+     {
+    	 var chart = new F2.Chart({
+   		  id: 'mountNode',
+   		  pixelRatio: window.devicePixelRatio
+   		});
+
+   		chart.source(data, {
+   		  count: {
+   		    tickCount: 5,
+   		    min: 0
+   		  },
+   		  name: {
+   		    range: [0, 1]
+   		  }
+   		});
+   		chart.tooltip({
+   		  showCrosshairs: true,
+   		  showItemMarker: false,
+   		  onShow: function onShow(ev) {
+   		    var items = ev.items;
+   		    items[0].name = null;
+   		    items[0].value = '人数:' + items[0].value;
+   		  }
+   		});
+   		chart.axis('name', {
+   		  label: function label(text, index, total) {
+   		    var textCfg = {};
+   		    if (index === 0) {
+   		      textCfg.textAlign = 'left';
+   		    } else if (index === total - 1) {
+   		      textCfg.textAlign = 'right';
+   		    }
+   		    return textCfg;
+   		  }
+   		});
+   		chart.line().position('name*count');
+   		chart.point().position('name*count').style({
+   		  stroke: '#fff',
+   		  lineWidth: 1
+   		});
+   		chart.render();
+		  
+		  
+		
+   		var a="1";
+   		
+   		var chart = new F2.Chart({
+			  id: 'mountNodes',
+			  pixelRatio: window.devicePixelRatio
+			});
+			chart.source(data);
+			chart.legend(false);
+			chart.axis(false);
+
+			chart.coord('polar', {
+			  transposed: true,
+			  radiug: 0.9,
+			  innerRadius: 0.5,
+			  startAngle: 5 * Math.PI / 6,
+			  endAngle: 13 * Math.PI / 6
+			});
+
+			chart.guide().text({
+			  position: ['50%', '50%'],
+			  content: '总人数12人',
+			  style: {
+			    fontSize: 16,
+			    textAlign: 'center',
+			    textBaseLine: 'middle'
+			  }
+			});
+
+			chart.interval().position('a*count').color('name').adjust('stack').style({
+			  lineWidth: 1,
+			  stroke: '#fff'
+			});
+
+			chart.render();
+		  
+     }
+
+</script>
+
+</html>

@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+			<style type="text/css">
+			* {
+				margin: 0px;
+			}
+			
+			body {
+				width: 100%;
+				height: 100vh;
+				background-color: #7FFFD4;
+			}
+			
+			.base {
+				width: 100%;
+				height: 100%;
+				display: flex;
+				flex-wrap: wrap;
+				justify-content: center;
+				align-items: center;
+			}
+			
+			.wenzi{
+				width: 100%;
+				height: 10%;
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				font-family: 楷体;
+				font-size: 2rem;
+			}
+			
+			.chart-wrapper{
+				width: 100%;
+				height: 45%;
+				display: flex;
+				justify-content: center;
+				align-items: center;
+			}
+			
+			.chart-wrappers{
+				width: 100%;
+				height: 45%;
+				display: flex;
+				justify-content: center;
+				align-items: center;
+			}
+			
+			canvas{
+			    width: 80%;
+				height: 80%;
+			}
+		
+		</style>
+	</head>
+	<body>
+		<div class="base">
+		   <div class="wenzi">
+			    学生年龄相同人数
+		   </div>
+		   <div class="chart-wrapper">
+              <canvas id="mountNode"></canvas>
+           </div>
+           <div class="chart-wrappers">
+              <canvas id="mountNodes"></canvas>
+           </div>
+		</div>
+	</body>
+	
+	<script src="https://gw.alipayobjects.com/os/antv/assets/f2/3.3.0/f2.min.js"></script>
+    <script type="text/javascript">
+
+      alert("饼图和面积图业务报表");
+
+      var  formData=new FormData();
+      formData.append("datas","queryageCount");
+
+      var options={method:'post',body:formData};
+  
+      fetch("http://8xb9bm.natappfree.cc/antv",options).then(function(response){
+	  
+	    if(response.status==200)
+	    {	  
+		    response.json().then(function(datas){
+			  
+			    //alert(datas.agecountDatas);
+			    
+			    //接收python数据
+			    createView(datas.agecountDatas);
+			  
+		    });
+	    }
+	  
+     }).catch(function(error){
+	    
+     });
+     
+     function   createView(data)
+     {
+    	 var a="1";
+     	
+     	 var chart = new F2.Chart({
+     		  id: 'mountNode',
+     		  pixelRatio: window.devicePixelRatio
+     		});
+     		chart.source(data, {
+     		  count: {
+     		    formatter: function formatter(val) {
+     		      return val + '%';
+     		    }
+     		  }
+     		});
+     		chart.tooltip(false);
+     		
+     		chart.coord('polar', {
+     		  transposed: true,
+     		  innerRadius: 0.4,
+     		  radius: 0.85
+     		});
+     		chart.axis(false);
+     		chart.interval().position('a*count').color('name', ['#1890FF', '#13C2C2', '#2FC25B', '#FACC14', '#F04864', '#8543E0', '#3436C7', '#223273']).adjust('stack').shape('pie-with-icon');
+     		chart.render();
+		  
+		  
+		  
+		  var chart = new F2.Chart({
+			  id: 'mountNodes',
+			  pixelRatio: window.devicePixelRatio
+			});
+
+			chart.source(data);
+			chart.tooltip({
+			  showCrosshairs: true
+			});
+			chart.scale({
+			  name: {
+			    range: [0, 1]
+			  },
+			  count: {
+			    tickCount: 5,
+			    min: 0
+			  }
+			});
+			chart.axis('name', {
+			  label: function label(text, index, total) {
+			    var textCfg = {};
+			    if (index === 0) {
+			      textCfg.textAlign = 'left';
+			    } else if (index === total - 1) {
+			      textCfg.textAlign = 'right';
+			    }
+			    return textCfg;
+			  }
+			});
+			chart.area().position('name*count');
+			chart.line().position('name*count');
+			chart.render();
+		  
+     }
+
+</script>
+
+</html>

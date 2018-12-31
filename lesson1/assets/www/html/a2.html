@@ -26,7 +26,7 @@
 			
 			.wenzi{
 				width: 100%;
-				height: 40%;
+				height: 10%;
 				display: flex;
 				justify-content: center;
 				align-items: center;
@@ -36,7 +36,15 @@
 			
 			.chart-wrapper{
 				width: 100%;
-				height: 60%;
+				height: 45%;
+				display: flex;
+				justify-content: center;
+				align-items: center;
+			}
+			
+			.chart-wrappers{
+				width: 100%;
+				height: 45%;
 				display: flex;
 				justify-content: center;
 				align-items: center;
@@ -57,26 +65,30 @@
 		    <div class="chart-wrapper">
               <canvas id="mountNode"></canvas>
             </div>
+            <div class="chart-wrappers">
+              <canvas id="mountNodes"></canvas>
+           </div>
 		</div>
 	</body>
 	
 	<script src="https://gw.alipayobjects.com/os/antv/assets/f2/3.3.0/f2.min.js"></script>
     <script  type="text/javascript">
-    alert("饼图业务报表");
+    alert("饼图和环图业务报表");
 
     var  formData=new FormData();
     formData.append("datas","querynamecount");
 
     var options={method:'post',body:formData};
  
-    fetch("http://qhbcra.natappfree.cc/antv",options).then(function(response){
+    fetch("http://8xb9bm.natappfree.cc/antv",options).then(function(response){
 	  
 	    if(response.status==200)
 	    {	  
 		    response.json().then(function(datas){
 			  
 			    //alert(datas.namecountDatas);
-			  
+			    
+			    //接收python数据
 			    createView(datas.namecountDatas);	
 			  
 		    });
@@ -132,6 +144,36 @@
 		  });
 
 		  chart.render();
+		  
+		  
+		  
+		  var chart = new F2.Chart({
+    		  id: 'mountNodes',
+    		  pixelRatio: window.devicePixelRatio
+    		});
+    		chart.source(datas, {
+    		  percent: {
+    		    formatter: function formatter(val) {
+    		      return val + '%';
+    		    }
+    		  }
+    		});
+    		chart.tooltip(false);
+    		
+    		chart.coord('polar', {
+    		  transposed: true,
+    		  innerRadius: 0.7,
+    		  radius: 0.85
+    		});
+    		chart.axis(false);
+    		chart.interval().position('a*count').color('name', ['#FE5D4D', '#3BA4FF', '#737DDE']).adjust('stack');
+
+    		chart.guide().html({
+    		  position: ['50%', '45%'],
+    		  html: '<div style="width: 150px;height: 30px;text-align: center;">' + '<div style="font-size: 12px">总人数</div>' + '<div style="font-size: 15px">12人</div>' + '</div>'
+    		});
+    		chart.render();
+    		
 	  
     }
   
