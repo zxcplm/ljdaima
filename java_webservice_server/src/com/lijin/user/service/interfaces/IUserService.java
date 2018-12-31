@@ -34,4 +34,13 @@ public interface IUserService {
 	//学生姓氏的部分 
 	public  String   queryNameCount();
 	
+	//学生性别
+	public  String   querySexCount();
+	
+	//学生地址
+	public  String   queryAddressCount();
+	
+	//学生年龄
+	public  String   queryAgeCount();
+	
 }

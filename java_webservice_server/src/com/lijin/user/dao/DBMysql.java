@@ -269,9 +269,8 @@ public class DBMysql   implements  DB {
 			while (rs.next()) {
 				Data data = new Data();
 				data.setCount(rs.getDouble(1));
-				data.setName(rs.getString(2));
-			
-		
+				data.setName(rs.getString(2));	
+				
 				listData.add(data);
 			}
 		} catch (SQLException e) {
@@ -291,6 +290,130 @@ public class DBMysql   implements  DB {
 		return  listData;
 	
 	}
+	
+	
+	//学生性别
+	@Override
+	public List querySexCount() {
+		
+		// TODO Auto-generated method stub
+		
+		System.out.println("DBMysql  is   querySexCount");
+		String sql = "SELECT ssex,COUNT(*) FROM t_stus  GROUP  BY ssex" ;
+
+		List<Data> listData = new ArrayList<Data>();
+
+		try {
+			PreparedStatement pstmt = conn.prepareStatement(sql);
+
+			ResultSet rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				Data data = new Data();
+				data.setName(rs.getString(1));
+				data.setCount(rs.getInt(2));
+		
+				listData.add(data);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			if (null != conn) {
+				try {
+					conn.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}
+		
+		return  listData;
+	}
+	
+	
+	//学生地址
+	@Override
+	public List queryAddressCount() {
+		
+		// TODO Auto-generated method stub
+		
+		System.out.println("DBMysql  is   queryAddressCount");
+		String sql = "SELECT saddress,COUNT(*) FROM t_stus  GROUP  BY saddress" ;
+
+		List<Data> listData = new ArrayList<Data>();
+
+		try {
+			PreparedStatement pstmt = conn.prepareStatement(sql);
+
+			ResultSet rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				Data data = new Data();
+				data.setName(rs.getString(1));
+				data.setCount(rs.getInt(2));
+		
+				listData.add(data);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			if (null != conn) {
+				try {
+					conn.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}
+		
+		return  listData;
+	}
+	
+	
+	//学生年龄
+	@Override
+	public List queryAgeCount() {
+		
+		// TODO Auto-generated method stub
+		
+		System.out.println("DBMysql  is   queryAgeCount");
+		String sql = "SELECT sage,COUNT(*) FROM t_stus  GROUP  BY sage" ;
+
+		List<Data> listData = new ArrayList<Data>();
+
+		try {
+			PreparedStatement pstmt = conn.prepareStatement(sql);
+
+			ResultSet rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				Data data = new Data();
+				data.setName(rs.getString(1));
+				data.setCount(rs.getInt(2));
+		
+				listData.add(data);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			if (null != conn) {
+				try {
+					conn.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}
+		
+		return  listData;
+	}
+
 
 }
 

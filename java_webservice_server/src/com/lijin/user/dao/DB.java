@@ -25,5 +25,15 @@ public interface DB {
 	public  List  queryClassToStuCount();
 	
 	public List queryNameCount() ;
+	
+	//学生性别
+	public List querySexCount();
+	
+	//学生地址
+	public List queryAddressCount();
+	
+	//学生年龄
+	public List queryAgeCount();
+
 
 }

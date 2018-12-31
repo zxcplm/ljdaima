@@ -15,10 +15,8 @@ import com.lijin.user.dao.DB;
 import com.lijin.user.dao.DBMysql;
 import com.lijin.user.service.interfaces.IUserService;
 
-@WebService(portName="userservice",
-serviceName="UserServiceImpl",
-targetNamespace="http://thzm.com/wsdl",
-endpointInterface="com.lijin.user.service.interfaces.IUserService")
+@WebService(portName="userservice",serviceName="UserServiceImpl",targetNamespace="http://thzm.com/wsdl",
+		endpointInterface="com.lijin.user.service.interfaces.IUserService")
 public class UserServiceImpl   implements IUserService{
 
 	//private DB db = null;
@@ -107,10 +105,9 @@ public class UserServiceImpl   implements IUserService{
 	@Override
 	public String queryGroupByRoleCount() {
 		// TODO Auto-generated method stub
-		System.out
-				.println("UserServiceImpl  is queryGroupByRoleCount  start...  ");
+		System.out.println("UserServiceImpl  is queryGroupByRoleCount  start...  ");
 
-		 DBMysql db = new DBMysql();
+		DBMysql db = new DBMysql();
 		//db = (DB) maps.get("db");
 
 		List<StuAndRole> lists = db.queryRoleGroupCount();
@@ -132,11 +129,10 @@ public class UserServiceImpl   implements IUserService{
 	@Override
 	public String queryStuAndkmCount(String name) {
 		// TODO Auto-generated method stub
-		System.out
-				.println("UserServiceImpl  is queryGroupByRoleCount  start...  ");
+		System.out.println("UserServiceImpl  is queryGroupByRoleCount  start...  ");
 
 		 DBMysql db = new DBMysql();
-	//	db = (DB) maps.get("db");
+	    //db = (DB) maps.get("db");
 		String data = db.queryStuAndkmCount(name);
 
 		System.out.println("data-->" + data);
@@ -159,7 +155,6 @@ public class UserServiceImpl   implements IUserService{
 		return "登录失败";
 	}
 
-	// 沈南鹏
 	@Override
 	public String queryGirdMenuData() {
 		// TODO Auto-generated method stub
@@ -181,12 +176,10 @@ public class UserServiceImpl   implements IUserService{
 	@Override
 	public String queryClassToStuCount() {
 		// TODO Auto-generated method stub
-		System.out
-				.println("UserServiceImpl  is queryClassToStuCount  start...  ");
+		System.out.println("UserServiceImpl  is queryClassToStuCount  start...  ");
 		
-		 DBMysql db = new DBMysql();
-		 
-		 
+		DBMysql db = new DBMysql();
+		 		 
 		//db = (DB) maps.get("db");
 
 		List<Data> lists = db.queryClassToStuCount();
@@ -199,10 +192,9 @@ public class UserServiceImpl   implements IUserService{
 	@Override
 	public String queryNameCount() {
 		// TODO Auto-generated method stub
-		System.out
-		.println("UserServiceImpl  is queryNameCount  start...  ");
+		System.out.println("UserServiceImpl  is queryNameCount  start...  ");
 
-       DBMysql db = new DBMysql();
+        DBMysql db = new DBMysql();
  
 		List<Data> lists = db.queryNameCount();
 		String strJson = com.alibaba.fastjson.JSONArray.toJSONString(lists);
@@ -210,5 +202,51 @@ public class UserServiceImpl   implements IUserService{
 		System.out.println("List<Data>Name-->strJson-->" + strJson);
 		return strJson;
 	}
+	
+	//学生性别
+	@Override
+	public String querySexCount() {
+		// TODO Auto-generated method stub
+		System.out.println("UserServiceImpl  is querySexCount  start...  ");
+
+        DBMysql db = new DBMysql();
+ 
+		List<Data> lists = db.querySexCount();
+		String strJson = com.alibaba.fastjson.JSONArray.toJSONString(lists);
+
+		System.out.println("List<Data>Sex-->strJson-->" + strJson);
+		return strJson;
+	}
+	
+	//学生地址
+	@Override
+	public String queryAddressCount() {
+		// TODO Auto-generated method stub
+		System.out.println("UserServiceImpl  is queryAddressCount  start...  ");
+
+        DBMysql db = new DBMysql();
+ 
+		List<Data> lists = db.queryAddressCount();
+		String strJson = com.alibaba.fastjson.JSONArray.toJSONString(lists);
+
+		System.out.println("List<Data>Address-->strJson-->" + strJson);
+		return strJson;
+	}
+	
+	//学生年龄
+	@Override
+	public String queryAgeCount() {
+		// TODO Auto-generated method stub
+		System.out.println("UserServiceImpl  is queryAgeCount  start...  ");
+
+        DBMysql db = new DBMysql();
+ 
+		List<Data> lists = db.queryAgeCount();
+		String strJson = com.alibaba.fastjson.JSONArray.toJSONString(lists);
+
+		System.out.println("List<Data>Age-->strJson-->" + strJson);
+		return strJson;
+	}
+
 
 }

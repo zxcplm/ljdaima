@@ -69,5 +69,28 @@ public class DBOracle implements  DB{
 		// TODO Auto-generated method stub
 		return null;
 	}
+	
+	//学生性别
+	@Override
+	public List querySexCount() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+	//学生地址
+	@Override
+	public List queryAddressCount() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+	//学生年龄
+	@Override
+	public List queryAgeCount() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
 
 }
